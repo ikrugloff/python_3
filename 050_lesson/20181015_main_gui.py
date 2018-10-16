@@ -53,16 +53,18 @@ window.show()
 
 # window.comboBox_sex.addItem('Female')  # TODO: How do it in designer??? Right mouse button???
 # window.comboBox_sex.addItem('Male')
-purchase = Purchase()
+# purchase = Purchase()
 ######
 """
 Get all positions
 """
-purchase_list = purchase.get_all_positions()
+# purchase_list = purchase.get_all_positions()
 
 
 def get_all_positions():
-    for purchase in purchase_list:
+    purchase = Purchase()
+    window.listWidget_purchase_list.clear()
+    for purchase in purchase.get_all_positions():
         window.listWidget_purchase_list.addItem(f'{str(purchase["name"])} : {str(purchase["quantity"])} '
                                                 f'{str(purchase["unit_of_measurement"])} (Purchased date: '
                                                 f'{str(purchase["purchase_date"])})')
@@ -73,6 +75,8 @@ window.pushButton_refresh_purchase_list.clicked.connect(get_all_positions)
 """
 Add new position
 """
+
+
 def validate_data():
     purchase_date = window.lineEdit_purchase_date.text()
     try:
@@ -80,6 +84,7 @@ def validate_data():
         return True
     except Exception as e:
         return False
+
 
 def line_edit_checking():
     valid_data = validate_data()
@@ -94,8 +99,10 @@ def line_edit_checking():
     else:
         return False
 
+
 def add_new_position():
     check = line_edit_checking()
+    purchase = Purchase()
     if check:
         my_dict = {
             "name": window.lineEdit_name.text(),
@@ -110,7 +117,10 @@ def add_new_position():
 
 
 window.pushButton_add_new_position.clicked.connect(add_new_position)
-
+######
+"""
+Set new quantity or new date for 1 item
+"""
 # #########
 # #  Why does session start before clicking the button??????
 # def interest_search():
