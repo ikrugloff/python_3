@@ -140,7 +140,7 @@ def check_quantity():
 
 def get_object():
     selected_object_number = window.listWidget_purchase_list.currentRow()
-    if selected_object_number > 0:
+    if selected_object_number >= 0:
         print(selected_object_number)
         print(window.listWidget_purchase_list.currentItem().text())
         purchase = Purchase()
