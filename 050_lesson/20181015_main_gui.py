@@ -68,7 +68,7 @@ def get_all_positions():
     for purchase in purchase.get_all_positions():
         window.listWidget_purchase_list.addItem(f'{str(purchase["name"])} : {str(purchase["quantity"])} '
                                                 f'{str(purchase["unit_of_measurement"])} (Purchased date: '
-                                                f'{str(purchase["purchase_date"])})')
+                                                f'{str(purchase["purchase_date"])}) {str(purchase["status"])}')
 
 
 window.pushButton_refresh_purchase_list.clicked.connect(get_all_positions)
@@ -218,8 +218,21 @@ def delete_position():
 
 
 
-def testFunction(self):
-    print('hai............test')
+def set_status1():
+    print('IN set_status1')
+    purchase2set_status = get_object()
+    print(purchase2set_status)
+    status = 1
+    purchase = Purchase()
+    purchase.set_status(purchase2set_status, status)
+
+def set_status0():
+    print('IN set_status0')
+    purchase2set_status = get_object()
+    print(purchase2set_status)
+    status = 0
+    purchase = Purchase()
+    purchase.set_status(purchase2set_status, status)
 
 
 # window.listWidget_purchase_list.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)  # Changed in Qt Designer
@@ -245,8 +258,8 @@ window.listWidget_purchase_list.customMenu.addAction(window.action2)
 
 
 window.action.triggered.connect(delete_position)
-# window.action1.triggered.connect(set_status(1))
-# window.action2.triggered.connect(set_status(0))
+window.action1.triggered.connect(set_status1)
+window.action2.triggered.connect(set_status0)
 
 
 
