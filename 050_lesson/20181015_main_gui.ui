@@ -88,7 +88,7 @@
         <item>
          <widget class="QLineEdit" name="lineEdit_set_purchase_date">
           <property name="placeholderText">
-           <string>New date</string>
+           <string>New date(yyyy/mm/dd)</string>
           </property>
          </widget>
         </item>

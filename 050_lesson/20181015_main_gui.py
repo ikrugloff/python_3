@@ -169,6 +169,29 @@ def set_quantity():
 
 window.pushButton_set_quantity.clicked.connect(set_quantity)
 
+def valid_data():
+    purchase_date = window.lineEdit_set_purchase_date.text()
+    try:
+        datetime.datetime.strptime(purchase_date, '%Y/%m/%d')
+        return True
+    except Exception as e:
+        return False
+
+def set_purchase_date():
+    print('IN set_purchase_date')
+    validated_data = valid_data()
+    if check_object() and validated_data:
+        purchase2edit = get_object()
+        print(purchase2edit)
+        new_date = window.lineEdit_set_purchase_date.text()
+        purchase = Purchase()
+        print(new_date)
+        purchase.set_purchase_date(purchase2edit, new_date)
+    else:
+        pass
+
+
+window.pushButton_set_purchase_date.clicked.connect(set_purchase_date)
 ######
 # #########
 # #  Why does session start before clicking the button??????
