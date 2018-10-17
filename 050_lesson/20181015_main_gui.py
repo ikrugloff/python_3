@@ -3,8 +3,9 @@ import datetime
 from PyQt5 import QtWidgets, uic, QtGui
 import sys
 import time
-from PyQt5.QtWidgets import QListWidget
 
+from PyQt5.QtGui import QColor
+from PyQt5.QtWidgets import QListWidget, QListWidgetItem
 
 from purchase_list import Purchase
 from PyQt5.uic.properties import QtCore
@@ -66,10 +67,23 @@ def get_all_positions():
     purchase = Purchase()
     window.listWidget_purchase_list.clear()
     for purchase in purchase.get_all_positions():
-        window.listWidget_purchase_list.addItem(f'{str(purchase["name"])} : {str(purchase["quantity"])} '
+        item = QListWidgetItem(f'{str(purchase["name"])} : {str(purchase["quantity"])} '
                                                 f'{str(purchase["unit_of_measurement"])} (Purchased date: '
-                                                f'{str(purchase["purchase_date"])}) {str(purchase["status"])}')
-
+                                                f'{str(purchase["purchase_date"])}) : '
+                                                f'Status: {str(purchase["status"])}')
+        if str(purchase["status"]) == '1':
+            item.setBackground(QColor('#7fc97f'))
+            window.listWidget_purchase_list.addItem(item)
+        else:
+            window.listWidget_purchase_list.addItem(item)
+        # window.listWidget_purchase_list.addItem(f'{str(purchase["name"])} : {str(purchase["quantity"])} '
+        #                                         f'{str(purchase["unit_of_measurement"])} (Purchased date: '
+        #                                         f'{str(purchase["purchase_date"])}) : '
+        #                                         f'Status: {str(purchase["status"])}')
+        # if str(purchase["status"]) == '1':
+        # item.setTextColor(QtGui.QColor("green"))
+        # else:
+        #     pass
 
 window.pushButton_refresh_purchase_list.clicked.connect(get_all_positions)
 ######
