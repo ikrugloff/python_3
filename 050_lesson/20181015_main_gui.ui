@@ -18,7 +18,11 @@
     <item>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QListWidget" name="listWidget_purchase_list"/>
+       <widget class="QListWidget" name="listWidget_purchase_list">
+        <property name="contextMenuPolicy">
+         <enum>Qt::CustomContextMenu</enum>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QPushButton" name="pushButton_refresh_purchase_list">
