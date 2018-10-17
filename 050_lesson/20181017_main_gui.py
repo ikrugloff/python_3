@@ -122,10 +122,10 @@ def set_quantity():
     # print('IN set_quantity')
     if check_object() and check_quantity():
         purchase2edit = get_object()
-        print(purchase2edit)
+        # print(purchase2edit)
         new_quantity = window.lineEdit_set_quantity.text()
         purchase = Purchase()
-        print(new_quantity)
+        # print(new_quantity)
         purchase.set_quantity(purchase2edit, new_quantity)
     else:
         pass
