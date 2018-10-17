@@ -195,6 +195,7 @@ def set_status0():
     purchase.set_status(purchase2set_status, status)
 
 
+# Don't forget change contextMenuPolicy to CustomContextMenu on listWidget
 window.listWidget_purchase_list.customContextMenuRequested.connect(right_click_function)
 
 window.action = QtWidgets.QAction()
