@@ -20,7 +20,7 @@ def get_all_positions():
     purchase = Purchase()
     window.listWidget_purchase_list.clear()
     for purchase in purchase.get_all_positions():
-        item = QListWidgetItem(f'{str(purchase["name"])} : {str(purchase["quantity"])}'
+        item = QListWidgetItem(f'{str(purchase["name"])} : {str(purchase["quantity"])} '
                                f'{str(purchase["unit_of_measurement"])} (Purchased date: '
                                f'{str(purchase["purchase_date"])}) : '
                                f'Status: {str(purchase["status"])}')
@@ -38,8 +38,8 @@ Add new position
 """
 
 
-def validate_data():
-    purchase_date = window.lineEdit_purchase_date.text()
+def validate_data(date_text):
+    purchase_date = date_text
     try:
         datetime.datetime.strptime(purchase_date, '%Y/%m/%d')
         return True
@@ -48,7 +48,7 @@ def validate_data():
 
 
 def line_edit_checking():
-    valid_data = validate_data()
+    valid_data = validate_data(window.lineEdit_purchase_date.text())
     if valid_data:
         if window.lineEdit_name.text() is not None \
                 and window.lineEdit_quantity.text() is not None \
@@ -74,7 +74,7 @@ def add_new_position():
         }
         purchase.add_new_position(my_dict)
     else:
-        pass
+        pass  # TODO: добавить вывод ошибки в listWidget
 
 
 window.pushButton_add_new_position.clicked.connect(add_new_position)
@@ -112,7 +112,7 @@ def get_object():
         # print('*' * 10)
         return selected_object_name
     else:
-        pass
+        pass  # TODO: необходимо выделить объект для редактирования
 
 
 window.listWidget_purchase_list.itemClicked.connect(get_object)
@@ -128,24 +128,15 @@ def set_quantity():
         # print(new_quantity)
         purchase.set_quantity(purchase2edit, new_quantity)
     else:
-        pass
+        pass  # TODO: необходимо задать количество
 
 
 window.pushButton_set_quantity.clicked.connect(set_quantity)
 
 
-def valid_data():
-    purchase_date = window.lineEdit_set_purchase_date.text()
-    try:
-        datetime.datetime.strptime(purchase_date, '%Y/%m/%d')
-        return True
-    except Exception as e:
-        return False
-
-
 def set_purchase_date():
     # print('IN set_purchase_date')
-    validated_data = valid_data()
+    validated_data = validate_data(window.lineEdit_set_purchase_date.text())
     if check_object() and validated_data:
         purchase2edit = get_object()
         # print(purchase2edit)
@@ -177,20 +168,11 @@ def delete_position():
     purchase.delete_position(purchase2deleted)
 
 
-def set_status1():
+def set_status(status):
     # print('IN set_status1')
     purchase2set_status = get_object()
     # print(purchase2set_status)
-    status = 1
-    purchase = Purchase()
-    purchase.set_status(purchase2set_status, status)
-
-
-def set_status0():
-    # print('IN set_status0')
-    purchase2set_status = get_object()
-    # print(purchase2set_status)
-    status = 0
+    # status = 1
     purchase = Purchase()
     purchase.set_status(purchase2set_status, status)
 
@@ -198,26 +180,26 @@ def set_status0():
 # Don't forget change contextMenuPolicy to CustomContextMenu on listWidget
 window.listWidget_purchase_list.customContextMenuRequested.connect(right_click_function)
 
-window.action = QtWidgets.QAction()
-window.action.setObjectName('action_delete_position')
-window.action.setText('Delete')
+action = QtWidgets.QAction()
+action.setObjectName('action_delete_position')
+action.setText('Delete')
 
-window.action1 = QtWidgets.QAction()
-window.action1.setObjectName('action1_set_status')
-window.action1.setText('Purchased')
+action1 = QtWidgets.QAction()
+action1.setObjectName('action1_set_status')
+action1.setText('Purchased')
 
-window.action2 = QtWidgets.QAction()
-window.action2.setObjectName('action2_set_status')
-window.action2.setText('To buy')
+action2 = QtWidgets.QAction()
+action2.setObjectName('action2_set_status')
+action2.setText('To buy')
 
 window.listWidget_purchase_list.customMenu = QtWidgets.QMenu('Menu', window.listWidget_purchase_list)
-window.listWidget_purchase_list.customMenu.addAction(window.action)
-window.listWidget_purchase_list.customMenu.addAction(window.action1)
-window.listWidget_purchase_list.customMenu.addAction(window.action2)
+window.listWidget_purchase_list.customMenu.addAction(action)
+window.listWidget_purchase_list.customMenu.addAction(action1)
+window.listWidget_purchase_list.customMenu.addAction(action2)
 
 
-window.action.triggered.connect(delete_position)
-window.action1.triggered.connect(set_status1)
-window.action2.triggered.connect(set_status0)
+action.triggered.connect(delete_position)
+action1.triggered.connect(lambda: set_status(status=1))  # lambda must have!!!)
+action2.triggered.connect(lambda: set_status(status=0))
 
 sys.exit(app.exec_())
