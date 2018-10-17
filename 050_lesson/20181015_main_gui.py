@@ -5,6 +5,7 @@ import sys
 import time
 from PyQt5.QtWidgets import QListWidget
 
+
 from purchase_list import Purchase
 from PyQt5.uic.properties import QtCore
 
@@ -121,6 +122,54 @@ window.pushButton_add_new_position.clicked.connect(add_new_position)
 """
 Set new quantity or new date for 1 item
 """
+def check_object():
+    object_ = get_object()
+    print(f'Object: {object_}')
+    if object_:
+        return True
+    else:
+        return False
+
+def check_quantity():
+    quantity = window.lineEdit_set_quantity.text()
+    print(f'Quantity: {quantity}')
+    if quantity:
+        return True
+    else:
+        return False
+
+def get_object():
+    selected_object_number = window.listWidget_purchase_list.currentRow()
+    if selected_object_number > 0:
+        print(selected_object_number)
+        print(window.listWidget_purchase_list.currentItem().text())
+        purchase = Purchase()
+        selected_object_name = purchase.get_all_positions()[selected_object_number]['name']
+        print(str(selected_object_name))
+        print('*' * 10)
+        # selected_purchase = selected_object_name
+        return selected_object_name
+    else:
+        pass
+
+window.listWidget_purchase_list.itemClicked.connect(get_object)
+
+def set_quantity():
+    print('IN set_quantity')
+    if check_object() and check_quantity():
+        purchase2edit = get_object()
+        print(purchase2edit)
+        new_quantity = window.lineEdit_set_quantity.text()
+        purchase = Purchase()
+        print(new_quantity)
+        purchase.set_quantity(purchase2edit, new_quantity)
+    else:
+        pass
+
+
+window.pushButton_set_quantity.clicked.connect(set_quantity)
+
+######
 # #########
 # #  Why does session start before clicking the button??????
 # def interest_search():
