@@ -1,6 +1,6 @@
 import datetime
 
-from PyQt5 import QtWidgets, uic
+from PyQt5 import QtWidgets, uic, QtGui
 import sys
 import time
 from PyQt5.QtWidgets import QListWidget
@@ -193,6 +193,68 @@ def set_purchase_date():
 
 window.pushButton_set_purchase_date.clicked.connect(set_purchase_date)
 ######
+"""
+Right-click item menu with options:
+1. Delete_position
+2. Set_status
+"""
+# Right click menu
+def rightClickFunction(event):
+    index = window.listWidget_purchase_list.indexAt(event)
+    if not index.isValid():
+        return
+    # item = window.listWidget_purchase_list.indexAt(event)
+    window.listWidget_purchase_list.customMenu.popup(QtGui.QCursor.pos())
+
+
+def delete_position():
+    print('IN delete_position')
+    purchase2deleted = get_object()
+    print(purchase2deleted)
+    # new_quantity = window.lineEdit_set_quantity.text()
+    purchase = Purchase()
+    # print(new_quantity)
+    purchase.delete_position(purchase2deleted)
+
+
+
+def testFunction(self):
+    print('hai............test')
+
+
+# window.listWidget_purchase_list.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)  # Changed in Qt Designer
+window.listWidget_purchase_list.customContextMenuRequested.connect(rightClickFunction)
+
+window.action = QtWidgets.QAction()
+window.action.setObjectName('action_delete_position')
+window.action.setText('Delete')
+
+window.action1 = QtWidgets.QAction()
+window.action1.setObjectName('action1_set_status')
+window.action1.setText('Purchased')
+
+window.action2 = QtWidgets.QAction()
+window.action2.setObjectName('action2_set_status')
+window.action2.setText('To buy')
+
+window.listWidget_purchase_list.customMenu = QtWidgets.QMenu('Menu', window.listWidget_purchase_list)
+window.listWidget_purchase_list.customMenu.addAction(window.action)
+window.listWidget_purchase_list.customMenu.addAction(window.action1)
+window.listWidget_purchase_list.customMenu.addAction(window.action2)
+
+
+
+window.action.triggered.connect(delete_position)
+# window.action1.triggered.connect(set_status(1))
+# window.action2.triggered.connect(set_status(0))
+
+
+
+
+
+
+
+
 # #########
 # #  Why does session start before clicking the button??????
 # def interest_search():
